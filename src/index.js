@@ -4,10 +4,41 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import {JOBS as jobs} from './data';
+import ListJobItems from './components/listJobItems/index';
+
+
+const AppWithRoutes = () => {
+
+  return (
+    <Router>
+      <Switch>
+          <Route path="/">
+            <ListJobItems jobs = {jobs} />
+          </Route>
+          {/* <Route path="/users">
+            <Users />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route> */}
+        </Switch>
+    </Router>
+  );
+
+}
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  // <React.StrictMode>
+  //   {/* <App /> */}
+  // </React.StrictMode>
+  <AppWithRoutes />,
   document.getElementById('root')
 );
 
