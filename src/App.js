@@ -1,29 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import {ApolloProvider} from 'react-apollo';
-import ApolloClient from 'apollo-boost';
-import Jobs from './Jobs';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import { ApolloProvider } from "react-apollo";
+import ApolloClient from "apollo-boost";
+//import Jobs from "./api/queries/index";
+import { Jobs } from "./api/queries/index";
 import { gql } from "apollo-boost";
 
-const client = new ApolloClient ({
-  uri: "https://api.graphql.jobs/"
+const client = new ApolloClient({
+  uri: "https://api.graphql.jobs/",
 });
 
 // const querCall = () => {
 //   console.log('query')
-  // client
-  // .query({
-  //   query: gql`
-  //   {
-  //     jobs
-  //     {
-  //      id
-  //     }
-  //   }
-  //   `
-  // })
-  // .then(result => console.log(result));
+// client
+// .query({
+//   query: gql`
+//   {
+//     jobs
+//     {
+//      id
+//     }
+//   }
+//   `
+// })
+// .then(result => console.log(result));
 //   client
 //   .query({
 //     query: gql`
@@ -37,14 +38,11 @@ const client = new ApolloClient ({
 //   .then(result => console.log(result));
 // }
 //  querCall();
-const App= () => (
-  <ApolloProvider client = {client}>
-    <div>
-      { <Jobs />  }
-    </div>
+const App = () => (
+  <ApolloProvider client={client}>
+    <div>{<Jobs />}</div>
   </ApolloProvider>
-)
-
+);
 
 // function App() {
 //   return (

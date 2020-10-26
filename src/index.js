@@ -1,45 +1,41 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import * as serviceWorker from "./serviceWorker";
+import Landing from "./screens/Landing/index";
+import App from "./App";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  BrowserRouter,
 } from "react-router-dom";
-import {JOBS as jobs} from './data';
-import ListJobItems from './components/listJobItems/index';
-
+import JobDetails from "./screens/JobDetails";
 
 const AppWithRoutes = () => {
-
   return (
-    <Router>
+    <BrowserRouter>
       <Switch>
-          <Route path="/">
-            <ListJobItems jobs = {jobs} />
-          </Route>
-          {/* <Route path="/users">
+        <Route exact path="/" component={App}></Route>
+        <Route exact path="/job/:id" component={JobDetails}></Route>
+        {/* <Route path="/users">
             <Users />
           </Route>
           <Route path="/">
             <Home />
           </Route> */}
-        </Switch>
-    </Router>
+      </Switch>
+    </BrowserRouter>
   );
-
-}
+};
 
 ReactDOM.render(
   // <React.StrictMode>
   //   {/* <App /> */}
   // </React.StrictMode>
   <AppWithRoutes />,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
