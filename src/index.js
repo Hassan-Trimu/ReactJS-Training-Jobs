@@ -12,6 +12,7 @@ import {
   BrowserRouter,
 } from "react-router-dom";
 import JobDetails from "./screens/JobDetails";
+import PostJob from "./screens/PostJob";
 
 const AppWithRoutes = () => {
   return (
@@ -19,6 +20,7 @@ const AppWithRoutes = () => {
       <Switch>
         <Route exact path="/" component={App}></Route>
         <Route exact path="/job/:id" component={JobDetails}></Route>
+        <Route exact path="/postJob/" component={PostJob}></Route>
         {/* <Route path="/users">
             <Users />
           </Route>

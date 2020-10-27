@@ -11,6 +11,9 @@ const GET_JOBS = gql`
       company {
         name
       }
+      commitment {
+        id
+      }
       description
       userEmail
     }
