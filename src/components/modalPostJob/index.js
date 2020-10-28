@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ReactDOM, { createPortal } from "react-dom";
 import PostJob from "../../screens/PostJob/index";
@@ -6,6 +6,7 @@ import { MdClose } from "react-icons/md";
 import Modal from "react-modal";
 import POST_JOB from "../../api/mutations/index";
 import { useMutation } from "@apollo/client";
+import { ApolloProvider } from "react-apollo";
 
 const Background = styled.div`
   width: 100%;
@@ -112,6 +113,14 @@ const Input = styled.input`
 `;
 
 const ModalPostJob = ({ showModal, setShowModal }) => {
+  const [Title, setTitle] = useState("");
+  const [CommitmentId, setCommitmentId] = useState("");
+  const [CompanyName, setCompanyName] = useState("");
+  const [LocationNames, setLocationNames] = useState("");
+  const [UserEmail, setUserEmail] = useState("");
+  const [ApplyUrl, setApplyUrl] = useState("");
+  const [Description, setDescription] = useState("");
+
   return (
     <Modal
       style={{
@@ -140,31 +149,87 @@ const ModalPostJob = ({ showModal, setShowModal }) => {
         }}
         onSubmit={(e) => {
           e.preventDefault();
+          if (
+            Title &&
+            CommitmentId &&
+            CompanyName &&
+            LocationNames &&
+            UserEmail &&
+            ApplyUrl &&
+            Description
+          ) {
+            setTitle("");
+            setCommitmentId("");
+            setCompanyName("");
+            setLocationNames("");
+            setUserEmail("");
+            setApplyUrl("");
+            setDescription("");
+          } else {
+            alert("Enter Valid Values");
+          }
+          // console.log(this.title);
         }}
       >
         <label>Title </label>
-        <Input type="text"></Input>
+        <Input
+          type="text"
+          value={Title}
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
+        ></Input>
         <br />
         <br />
         <label>Commitment ID </label>
-        <Input type="text"></Input>
+        <Input
+          type="text"
+          value={CommitmentId}
+          onChange={(e) => {
+            setCommitmentId(e.target.value);
+          }}
+        ></Input>
         <br />
         <br />
 
         <label>Company Name </label>
-        <Input type="text"></Input>
+        <Input
+          type="text"
+          value={CompanyName}
+          onChange={(e) => {
+            setCompanyName(e.target.value);
+          }}
+        ></Input>
         <br />
         <br />
         <label>Location Names </label>
-        <Input type="text"></Input>
+        <Input
+          type="text"
+          value={LocationNames}
+          onChange={(e) => {
+            setLocationNames(e.target.value);
+          }}
+        ></Input>
         <br />
         <br />
         <label>User Email </label>
-        <Input type="text"></Input>
+        <Input
+          type="text"
+          value={UserEmail}
+          onChange={(e) => {
+            setUserEmail(e.target.value);
+          }}
+        ></Input>
         <br />
         <br />
         <label>Apply Url </label>
-        <Input type="text"></Input>
+        <Input
+          type="text"
+          value={ApplyUrl}
+          onChange={(e) => {
+            setApplyUrl(e.target.value);
+          }}
+        ></Input>
 
         <br />
         <br />
@@ -173,6 +238,10 @@ const ModalPostJob = ({ showModal, setShowModal }) => {
         <textarea
           type="text"
           style={{ height: "100px", width: "300px" }}
+          value={Description}
+          onChange={(e) => {
+            setDescription(e.target.value);
+          }}
         ></textarea>
         <br />
         <br />
