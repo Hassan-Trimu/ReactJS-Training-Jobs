@@ -1,6 +1,6 @@
 import React from "react";
-import { Query } from "react-apollo";
-import gql from "graphql-tag";
+import { Query, useQuery } from "react-apollo";
+import { gql } from "apollo-boost";
 import Landing from "../../screens/Landing/index";
 
 const GET_JOBS = gql`
@@ -20,18 +20,16 @@ const GET_JOBS = gql`
   }
 `;
 
-const Jobs = () => (
-  <Query query={GET_JOBS}>
-    {({ loading, error, data }) => {
-      if (loading) return "Loading...";
-      if (error) return `Error! ${error.message}`;
-      console.log(data);
+const Jobs = () => {
+  const { loading, error, data } = useQuery(GET_JOBS);
+  if (loading) return "Loading";
+  if (error) return `Error ${error.message} .`;
 
-      {
-        return (
-          <div>
-            <Landing jobs={data.jobs} />
-            {/* {data.jobs.map((job) => (
+  return (
+    <div>
+      {console.log(data.jobs)}
+      {<Landing jobs={data.jobs} />}
+      {/* {data.jobs.map((job) => (
               <div>
                 <h1>{job.title}</h1>
                 <h2>{job.company.name}</h2>
@@ -39,11 +37,7 @@ const Jobs = () => (
                 <p>{job.description}</p>
               </div>
             ))} */}
-          </div>
-        );
-      }
-    }}
-  </Query>
-);
-
+    </div>
+  );
+};
 export { Jobs };

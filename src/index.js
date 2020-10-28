@@ -13,22 +13,27 @@ import {
 } from "react-router-dom";
 import JobDetails from "./screens/JobDetails";
 import PostJob from "./screens/PostJob";
+import client from "./api";
+import { ApolloProvider } from "react-apollo";
 
+//import { ApolloProvider } from "@apollo/react-hooks";
 const AppWithRoutes = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={App}></Route>
-        <Route exact path="/job/:id" component={JobDetails}></Route>
-        <Route exact path="/postJob/" component={PostJob}></Route>
-        {/* <Route path="/users">
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={App}></Route>
+          <Route exact path="/job/:id" component={JobDetails}></Route>
+          <Route exact path="/postJob/" component={PostJob}></Route>
+          {/* <Route path="/users">
             <Users />
           </Route>
           <Route path="/">
             <Home />
           </Route> */}
-      </Switch>
-    </BrowserRouter>
+        </Switch>
+      </BrowserRouter>
+    </ApolloProvider>
   );
 };
 

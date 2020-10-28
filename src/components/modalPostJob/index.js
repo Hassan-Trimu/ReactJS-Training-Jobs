@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ReactDOM, { createPortal } from "react-dom";
 import PostJob from "../../screens/PostJob/index";
 import { MdClose } from "react-icons/md";
 import Modal from "react-modal";
 import POST_JOB from "../../api/mutations/index";
-import { useMutation } from "@apollo/client";
-import { ApolloProvider } from "react-apollo";
+import { useMutation } from "react-apollo";
 
 const Background = styled.div`
   width: 100%;
@@ -113,13 +112,34 @@ const Input = styled.input`
 `;
 
 const ModalPostJob = ({ showModal, setShowModal }) => {
-  const [Title, setTitle] = useState("");
-  const [CommitmentId, setCommitmentId] = useState("");
-  const [CompanyName, setCompanyName] = useState("");
-  const [LocationNames, setLocationNames] = useState("");
-  const [UserEmail, setUserEmail] = useState("");
-  const [ApplyUrl, setApplyUrl] = useState("");
-  const [Description, setDescription] = useState("");
+  const [formInfo, setFormInfo] = useState({
+    title: "",
+    companyName: "",
+    locationNames: "",
+    userEmail: "",
+    applyUrl: "",
+    description: "",
+  });
+
+  const [postJob, { loading, data }] = useMutation(POST_JOB);
+
+  useEffect(() => {
+    if (data) {
+      alert("Your post has been submitted");
+
+      setFormInfo({
+        title: "",
+        companyName: "",
+        locationNames: "",
+        userEmail: "",
+        applyUrl: "",
+        description: "",
+      });
+      setShowModal(false);
+    }
+  }, [data]);
+
+  if (loading) return "Loading";
 
   return (
     <Modal
@@ -150,21 +170,23 @@ const ModalPostJob = ({ showModal, setShowModal }) => {
         onSubmit={(e) => {
           e.preventDefault();
           if (
-            Title &&
-            CommitmentId &&
-            CompanyName &&
-            LocationNames &&
-            UserEmail &&
-            ApplyUrl &&
-            Description
+            formInfo.title &&
+            formInfo.companyName &&
+            formInfo.locationNames &&
+            formInfo.userEmail &&
+            formInfo.applyUrl
           ) {
-            setTitle("");
-            setCommitmentId("");
-            setCompanyName("");
-            setLocationNames("");
-            setUserEmail("");
-            setApplyUrl("");
-            setDescription("");
+            postJob({
+              variables: {
+                title: formInfo.title,
+                commitmentId: "cjtu8esth000z0824x00wtp1i",
+                companyName: formInfo.companyName,
+                locationNames: formInfo.locationNames,
+                userEmail: formInfo.userEmail,
+                description: formInfo.description,
+                applyUrl: formInfo.applyUrl,
+              },
+            }).catch((err) => alert(err.message));
           } else {
             alert("Enter Valid Values");
           }
@@ -174,19 +196,12 @@ const ModalPostJob = ({ showModal, setShowModal }) => {
         <label>Title </label>
         <Input
           type="text"
-          value={Title}
+          value={formInfo.title}
           onChange={(e) => {
-            setTitle(e.target.value);
-          }}
-        ></Input>
-        <br />
-        <br />
-        <label>Commitment ID </label>
-        <Input
-          type="text"
-          value={CommitmentId}
-          onChange={(e) => {
-            setCommitmentId(e.target.value);
+            setFormInfo({
+              ...formInfo,
+              title: e.target.value,
+            });
           }}
         ></Input>
         <br />
@@ -195,9 +210,12 @@ const ModalPostJob = ({ showModal, setShowModal }) => {
         <label>Company Name </label>
         <Input
           type="text"
-          value={CompanyName}
+          value={formInfo.companyName}
           onChange={(e) => {
-            setCompanyName(e.target.value);
+            setFormInfo({
+              ...formInfo,
+              companyName: e.target.value,
+            });
           }}
         ></Input>
         <br />
@@ -205,9 +223,12 @@ const ModalPostJob = ({ showModal, setShowModal }) => {
         <label>Location Names </label>
         <Input
           type="text"
-          value={LocationNames}
+          value={formInfo.locationNames}
           onChange={(e) => {
-            setLocationNames(e.target.value);
+            setFormInfo({
+              ...formInfo,
+              locationNames: e.target.value,
+            });
           }}
         ></Input>
         <br />
@@ -215,9 +236,12 @@ const ModalPostJob = ({ showModal, setShowModal }) => {
         <label>User Email </label>
         <Input
           type="text"
-          value={UserEmail}
+          value={formInfo.userEmail}
           onChange={(e) => {
-            setUserEmail(e.target.value);
+            setFormInfo({
+              ...formInfo,
+              userEmail: e.target.value,
+            });
           }}
         ></Input>
         <br />
@@ -225,9 +249,12 @@ const ModalPostJob = ({ showModal, setShowModal }) => {
         <label>Apply Url </label>
         <Input
           type="text"
-          value={ApplyUrl}
+          value={formInfo.applyUrl}
           onChange={(e) => {
-            setApplyUrl(e.target.value);
+            setFormInfo({
+              ...formInfo,
+              applyUrl: e.target.value,
+            });
           }}
         ></Input>
 
@@ -238,9 +265,12 @@ const ModalPostJob = ({ showModal, setShowModal }) => {
         <textarea
           type="text"
           style={{ height: "100px", width: "300px" }}
-          value={Description}
+          value={formInfo.description}
           onChange={(e) => {
-            setDescription(e.target.value);
+            setFormInfo({
+              ...formInfo,
+              description: e.target.value,
+            });
           }}
         ></textarea>
         <br />

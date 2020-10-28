@@ -1,7 +1,7 @@
 import React from "react";
 import JobCardItem from "../jobCardItem/index";
 const ListJobItems = ({ jobs }) => {
-  console.log("ListJobItems", jobs.length);
+  console.log("ListJobItems" + jobs.length);
   return (
     <div>
       {jobs.map((item) => {
